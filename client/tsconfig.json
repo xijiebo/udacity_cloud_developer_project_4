@@ -17,8 +17,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "noFallthroughCasesInSwitch": true
+    //TODO:: 8675309 
+    //"jsx": "react-jsx",
+    "jsx": "preserve"
+    //"noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"
