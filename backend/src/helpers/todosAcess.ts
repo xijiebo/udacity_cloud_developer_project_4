@@ -7,6 +7,7 @@ import { TodoItem } from '../models/TodoItem'
 
 const XAWS = AWSXRay.captureAWS(AWS)
 
+const userIdIndex = process.env.USER_ID_INDEX
 //const logger = createLogger('TodosAccess')
 
 //TODO: Implement the dataLayer logic
@@ -29,6 +30,23 @@ export class TodosAccess {
       const items = result.Items
       return items as TodoItem[]
     }
+
+    async getTodosPerUser(userId: string): Promise<TodoItem[]> {
+        console.log('Getting all todos for user ', userId)
+    
+        const result = await this.docClient.query({
+            TableName: this.todosTable,
+            IndexName : userIdIndex,
+            KeyConditionExpression: 'userId = :userId',
+            ExpressionAttributeValues: {
+              ':userId': userId
+            },
+            ScanIndexForward: false
+          }).promise()
+    
+        const items = result.Items
+        return items as TodoItem[]
+      }
   
     async createTodo(todoItem: TodoItem): Promise<TodoItem> {
       await this.docClient.put({

@@ -16,6 +16,10 @@ export async function getAllTodos(): Promise<TodoItem[]> {
   return todosAccess.getAllTodos()
 }
 
+export async function getTodosPerUser(userId: string): Promise<TodoItem[]> {
+    return todosAccess.getTodosPerUser(userId)
+  }
+
 export async function createTodo(
   createGroupRequest: CreateTodoRequest,
   userId: string
