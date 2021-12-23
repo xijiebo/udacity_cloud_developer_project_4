@@ -10,6 +10,10 @@ import * as uuid from 'uuid'
 
 const todosAccess = new TodosAccess()
 
+export async function getTodosPerTodoId(userId: string, todoId: string): Promise<TodoItem> {
+    return todosAccess.getTodosPerTodoId(userId, todoId)
+  }
+
 export async function getTodosPerUser(userId: string): Promise<TodoItem[]> {
     return todosAccess.getTodosPerUser(userId)
   }

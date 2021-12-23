@@ -13,8 +13,16 @@ export const handler = middy(
     console.log("createTodo event: ", event)
 
     const newTodo: CreateTodoRequest = JSON.parse(event.body)
-    const item = await createTodo(newTodo, getUserId(event))
+    if(!newTodo.name || !newTodo.dueDate) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: 'name and dueDate are required.'
+        })
+      }     
+    }
 
+    const item = await createTodo(newTodo, getUserId(event))
     return {
       statusCode: 201,
       headers: {

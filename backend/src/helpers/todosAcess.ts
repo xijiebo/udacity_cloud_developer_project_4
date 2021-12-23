@@ -17,6 +17,21 @@ export class TodosAccess {
       private readonly todosTable = process.env.TODOS_TABLE) {
     }
 
+    async getTodosPerTodoId(userId: string, todoId: string): Promise<TodoItem> {
+        console.log('Getting todo by id ', userId, todoId)
+    
+        const result = await this.docClient.get({
+            TableName: this.todosTable,
+            Key: {
+                userId,
+                todoId
+            }
+          }).promise()
+    
+        const item = result.Item
+        return item as TodoItem
+      }
+
     async getTodosPerUser(userId: string): Promise<TodoItem[]> {
         console.log('Getting all todos for user ', userId)
     
