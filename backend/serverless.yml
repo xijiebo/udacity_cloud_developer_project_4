@@ -28,6 +28,10 @@ provider:
     ATTACHMENT_S3_BUCKET: serverless-c4-todo-images-178415772920-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
 
+    #TODO::: 8675309
+    AUTH_0_SECRET_ID: Auth0Secret-${self:provider.stage}
+    AUTH_0_SECRET_FIELD: auth0Secret
+
   logs:
     # Enable API Gateway logs
     restApi: true
@@ -40,6 +44,20 @@ provider:
             - xray:PutTelemetryRecords
             - xray:PutTraceSegments
           Resource: "*"
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODO_ID_INDEX}
+
 
 
 functions:
@@ -186,3 +204,4 @@ resources:
               Action: 
               - s3:GetObject
               Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*     
+
