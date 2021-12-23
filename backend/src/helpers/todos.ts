@@ -1,5 +1,5 @@
 import { TodosAccess } from './todosAcess'
-//import { AttachmentUtils } from './attachmentUtils';
+import { getUploadUrl } from './attachmentUtils';
 import { TodoItem } from '../models/TodoItem'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
@@ -44,4 +44,9 @@ export async function updateTodo(
     return await todosAccess.updateTodo(
         userId, todoId, updateTodoRequest.name, updateTodoRequest.dueDate,updateTodoRequest.done
     )
+}
+
+export function createAttachmentPresignedUrl(imageId: string): string {
+    console.log("In createAttachmentPresignedUrl...")
+    return getUploadUrl(imageId)
 }

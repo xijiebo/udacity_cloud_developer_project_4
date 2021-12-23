@@ -60,7 +60,11 @@ provider:
         - dynamodb:Query
       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.USER_ID_INDEX}
 
-
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+      Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*
 
 functions:
 
@@ -102,6 +106,7 @@ functions:
       - http:
           method: patch
           path: todos/{todoId}
+          cors: true
           authorizer: Auth
 
   # TODO: Configure this function
@@ -112,6 +117,7 @@ functions:
       - http:
           method: delete
           path: todos/{todoId}
+          cors: true
           authorizer: Auth
 
   # TODO: Configure this function
@@ -122,6 +128,8 @@ functions:
       - http:
           method: post
           path: todos/{todoId}/attachment
+          cors: true
+          authorizer: Auth
 
 resources:
   Resources:
@@ -173,10 +181,6 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:provider.environment.ATTACHMENT_S3_BUCKET}
-        # NotificationConfiguration:
-        #   TopicConfigurations:
-        #     - Event: s3:ObjectCreated:Put
-        #       Topic: !Ref ImagesTopic
         CorsConfiguration:
           CorsRules:
             -
