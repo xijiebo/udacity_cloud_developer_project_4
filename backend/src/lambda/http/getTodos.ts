@@ -4,6 +4,7 @@ import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import * as middy from 'middy'
 import { cors } from 'middy/middlewares'
+import { parseUserId } from '../../auth/utils'
 
 // import { getTodosForUser as getTodosForUser } from '../../businessLogic/todos'
 // import { getUserId } from '../utils';
@@ -12,7 +13,11 @@ import { cors } from 'middy/middlewares'
 export const handler = middy( async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
   console.log('getTodos event', event)
-    //const todos = '...'
+
+  const authorization = event.headers.Authorization
+  const split = authorization.split(' ')
+  const jwtToken = split[1]
+  console.log("22222222222222222222222222222222222: " + jwtToken + '   :   sub:' + parseUserId(jwtToken));
 
     return {
       statusCode: 200,
