@@ -19,15 +19,12 @@ export async function createTodo(
   userId: string
 ): Promise<TodoItem> {
 
-  const todoId = uuid.v4()
-
   return await todosAccess.createTodo({
     userId: userId,
-    todoId: todoId,
+    todoId: uuid.v4(),
     createdAt: new Date().toISOString(),
-    name: createTodoRequest.name,
-    dueDate: createTodoRequest.dueDate,
-    done: false
+    done: false,
+    ...createTodoRequest
   })
 }
 
