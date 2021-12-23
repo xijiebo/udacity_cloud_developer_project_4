@@ -28,10 +28,6 @@ provider:
     ATTACHMENT_S3_BUCKET: serverless-c4-todo-images-178415772920-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
 
-    #TODO::: 8675309
-    AUTH_0_SECRET_ID: Auth0Secret-${self:provider.stage}
-    AUTH_0_SECRET_FIELD: auth0Secret
-
   logs:
     # Enable API Gateway logs
     restApi: true
