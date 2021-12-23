@@ -11,11 +11,6 @@ import * as uuid from 'uuid'
 
 const todosAccess = new TodosAccess()
 
-//TODO::: 8675309
-export async function getAllTodos(): Promise<TodoItem[]> {
-  return todosAccess.getAllTodos()
-}
-
 export async function getTodosPerUser(userId: string): Promise<TodoItem[]> {
     return todosAccess.getTodosPerUser(userId)
   }
@@ -36,3 +31,7 @@ export async function createTodo(
     done: false
   })
 }
+
+export async function deleteTodo(userId: string, todoId: string) {
+    return todosAccess.deleteTodo(userId, todoId)
+  }

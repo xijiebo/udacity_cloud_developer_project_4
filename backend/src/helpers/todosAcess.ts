@@ -18,18 +18,6 @@ export class TodosAccess {
       private readonly docClient: DocumentClient = createDynamoDBClient(),
       private readonly todosTable = process.env.TODOS_TABLE) {
     }
-  
-    //TODO:: 8675309, add user id an paramter
-    async getAllTodos(): Promise<TodoItem[]> {
-      console.log('Getting all todos')
-  
-      const result = await this.docClient.scan({
-        TableName: this.todosTable
-      }).promise()
-  
-      const items = result.Items
-      return items as TodoItem[]
-    }
 
     async getTodosPerUser(userId: string): Promise<TodoItem[]> {
         console.log('Getting all todos for user ', userId)
@@ -56,6 +44,17 @@ export class TodosAccess {
   
       return todoItem
     }
+
+    async deleteTodo(userId: string, todoId: string) {
+        await this.docClient.delete({
+          TableName: this.todosTable,
+          Key: {
+              "userId": userId,
+              "todoId": todoId
+          }
+        }).promise()
+    
+      }
   }
 
   function createDynamoDBClient() {
