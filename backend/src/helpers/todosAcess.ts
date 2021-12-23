@@ -52,6 +52,25 @@ export class TodosAccess {
               "userId": userId,
               "todoId": todoId
           }
+        }).promise()       
+      }
+
+      async updateTodo(userId: string, todoId: string, name: string, dueDate: string, done: boolean) {
+        await this.docClient.update({
+          TableName: this.todosTable,
+          Key: {
+            "userId": userId,
+            "todoId": todoId
+          },
+          UpdateExpression: "set #nm = :name, dueDate=:dueDate, done=:done",
+          ExpressionAttributeValues:{
+            ":name": name,
+            ":dueDate":dueDate,
+            ":done":done
+          },
+          ExpressionAttributeNames:{
+            "#nm": "name"
+          }
         }).promise()
     
       }

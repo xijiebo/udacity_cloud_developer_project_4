@@ -2,7 +2,7 @@ import { TodosAccess } from './todosAcess'
 //import { AttachmentUtils } from './attachmentUtils';
 import { TodoItem } from '../models/TodoItem'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
-//import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
+import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 //import { createLogger } from '../utils/logger'
 import * as uuid from 'uuid'
 //import * as createError from 'http-errors'
@@ -16,7 +16,7 @@ export async function getTodosPerUser(userId: string): Promise<TodoItem[]> {
   }
 
 export async function createTodo(
-  createGroupRequest: CreateTodoRequest,
+  createTodoRequest: CreateTodoRequest,
   userId: string
 ): Promise<TodoItem> {
 
@@ -26,12 +26,22 @@ export async function createTodo(
     userId: userId,
     todoId: todoId,
     createdAt: new Date().toISOString(),
-    name: createGroupRequest.name,
-    dueDate: createGroupRequest.dueDate,
+    name: createTodoRequest.name,
+    dueDate: createTodoRequest.dueDate,
     done: false
   })
 }
 
 export async function deleteTodo(userId: string, todoId: string) {
     return todosAccess.deleteTodo(userId, todoId)
-  }
+}
+
+export async function updateTodo(
+    userId: string, 
+    todoId: string, 
+    updateTodoRequest: UpdateTodoRequest
+  ) {
+    return await todosAccess.updateTodo(
+        userId, todoId, updateTodoRequest.name, updateTodoRequest.dueDate,updateTodoRequest.done
+    )
+}
