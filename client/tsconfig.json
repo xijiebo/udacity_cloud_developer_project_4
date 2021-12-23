@@ -19,8 +19,8 @@
     "noEmit": true,
     //TODO:: 8675309 
     //"jsx": "react-jsx",
-    "jsx": "preserve",
-    "noFallthroughCasesInSwitch": true
+    "jsx": "preserve"
+    //"noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"
