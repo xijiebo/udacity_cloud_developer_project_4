@@ -13,7 +13,7 @@ export const handler = middy(
     console.log("createTodo event: ", event)
 
     const newTodo: CreateTodoRequest = JSON.parse(event.body)
-    const newTodoItem = await createTodo(newTodo, getUserId(event))
+    const item = await createTodo(newTodo, getUserId(event))
 
     return {
       statusCode: 201,
@@ -22,7 +22,7 @@ export const handler = middy(
         'Access-Control-Allow-Credentials': true
       },
       body: JSON.stringify({
-        newTodoItem
+        item
       })
     }
 
