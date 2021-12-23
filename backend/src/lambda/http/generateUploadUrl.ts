@@ -10,7 +10,7 @@ import { createAttachmentPresignedUrl } from '../../helpers/todos'
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     
-    const singedUrl = createAttachmentPresignedUrl(event.pathParameters.todoId)
+    const uploadUrl = createAttachmentPresignedUrl(event.pathParameters.todoId)
     return {
       statusCode: 201,
       headers: {
@@ -18,7 +18,7 @@ export const handler = middy(
         'Access-Control-Allow-Credentials': true
       },
       body: JSON.stringify({
-        singedUrl
+        uploadUrl
       })
     }
   }
