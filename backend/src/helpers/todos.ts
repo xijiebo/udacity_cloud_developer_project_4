@@ -7,7 +7,6 @@ import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 import * as uuid from 'uuid'
 //import * as createError from 'http-errors'
 
-// TODO: Implement businessLogic
 
 const todosAccess = new TodosAccess()
 

@@ -10,8 +10,6 @@ const XAWS = AWSXRay.captureAWS(AWS)
 const userIdIndex = process.env.USER_ID_INDEX
 //const logger = createLogger('TodosAccess')
 
-//TODO: Implement the dataLayer logic
-
 export class TodosAccess {
 
     constructor(
